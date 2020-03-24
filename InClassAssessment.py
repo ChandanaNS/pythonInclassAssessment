@@ -79,7 +79,7 @@ class Shopping():
                         priceList[k] = priceList[k]
                     print('Amount after discount::::', priceList[k])
                 totalValue += v * float(priceList[k])
-            sortedList = sorted(priceList.items(), key=operator.itemgetter(1))
+            sortedList = sorted(priceList.items(), key=operator.itemgetter(1), reverse =True)
             print('Total cart value is ::::', totalValue)
             print('Discounted price list of your items ::::', priceList)
             print('Highest priced paid ::::', sortedList[-1])
