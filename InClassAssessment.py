@@ -16,46 +16,58 @@ Produce a method which accepts a list of baskets, and outputs their values from 
 
 '''
 import operator
-# Fetch price list from file
-def fileDictionary(fileName):
-    resultDict = {}
-    try:
-        fileOpen = open(fileName, 'r')
-        for lines in fileOpen.readlines():
-            line = lines.strip().split(" ")
-            resultDict[line[0]] = line[1]
-        print(resultDict)
-        return resultDict
+# # Fetch price list from file
+# def fileDictionary(fileName):
+#     resultDict = {}
+#     try:
+#         fileOpen = open(fileName, 'r')
+#         for lines in fileOpen.readlines():
+#             line = lines.strip().split(" ")
+#             resultDict[line[0]] = line[1]
+#         print(resultDict)
+#         return resultDict
+#
+#     except IOError:
+#         print("Exception occurred: File Name not found!")
+#
+# prices = fileDictionary("itemFile") #please refer github repository for the file
+#
+# disCountRates={'fresh30':['milk','bread'],'corona50':['rice']}
 
-    except IOError:
-        print("Exception occurred: File Name not found!")
+prices = {'milk': '1.49', 'bread': '0.79', 'onion': '0.59', 'rice': '1.0', 'biscuits': '2.0', 'muffins': '1.7'}
 
-prices = fileDictionary("itemFile") #please refer github repository for the file
-
-disCountRates={'fresh30':['milk','bread'],'corona50':['rice']}
+disCountRates = {
+    'fresh30': {
+        'discount': 30,
+        'items': ['milk', 'bread']
+    }, 'corona50': {
+        'discount': 50,
+        'items': ['rice']
+    }
+}
 
 class Shopping():
     def __init__(self, cart={}):
         self.__cart = cart
 
-    def getCart(self,item):
-        if item not in self.__cart:
-            return 0
-        return self.__cart[item]
-
-    def addItem(self, item, q):
-        if q <= 0:
-            raise ValueError("enter a valid quantity")
-        self.__cart[item] = q + self.getCart(item)
-
-    def delItem(self,item,q):
-        if q <= 0:
-            raise ValueError("Negative quantity not allowed")
-        elif q > self.getCart(item):
-            raise ValueError("insufficient quantity")
-        self.__cart[item] = self.getCart(item) - q
-        if self.__cart[item] == 0:
-            del self.__cart[item]
+    # def getCart(self,item):
+    #     if item not in self.__cart:
+    #         return 0
+    #     return self.__cart[item]
+    #
+    # def addItem(self, item, q):
+    #     if q <= 0:
+    #         raise ValueError("enter a valid quantity")
+    #     self.__cart[item] = q + self.getCart(item)
+    #
+    # def delItem(self,item,q):
+    #     if q <= 0:
+    #         raise ValueError("Negative quantity not allowed")
+    #     elif q > self.getCart(item):
+    #         raise ValueError("insufficient quantity")
+    #     self.__cart[item] = self.getCart(item) - q
+    #     if self.__cart[item] == 0:
+    #         del self.__cart[item]
 
     def CartValue(self,code=''):
             totalValue = 0
@@ -82,15 +94,10 @@ class Shopping():
             sortedList = sorted(priceList.items(), key=operator.itemgetter(1), reverse =True)
             print('Total cart value is ::::', totalValue)
             print('Discounted price list of your items ::::', priceList)
-            print('Highest priced paid ::::', sortedList[-1])
-            print('Lowest priced Paid ::::', sortedList[0])
+            print('Lowest priced paid ::::', sortedList[-1])
+            print('Hishest priced Paid ::::', sortedList[0])
             print("Your Cart list based on price ::::", sortedList)
             return totalValue
 
-chan = Shopping({'milk': 5})
-
-chan.addItem('bread', 1)
-
-chan.addItem('onion', 2)
-
-chan.CartValue('fresh30')
+chan = Shopping({'milk': 5, 'bread': 1, 'onion': 2})
+# chan.CartValue('fresh30')
