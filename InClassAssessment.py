@@ -32,6 +32,7 @@ def fileDictionary(fileName):
 
 prices = fileDictionary("itemFile")
 
+disCountRates={'fresh30':['milk','bread'],'corona50':['rice']}
 
 class Shopping():
     def __init__(self, cart={}):
@@ -46,6 +47,14 @@ class Shopping():
         if q <= 0:
             raise ValueError("enter a valid quantity")
         self.__cart[item] = q + self.getCart(item)
+    def delItem(self,item,q):
+        if q <= 0:
+            raise ValueError("Negative quantity not allowed")
+        elif q > self.getCart(item):
+            raise ValueError("insufficient quantity")
+        self.__cart[item] = self.getCart(item) - q
+        if self.__cart[item] == 0:
+            del self.__cart[item]
 chan = Shopping({'milk': 2})
 chan.addItem('bread', 4)
 chan.addItem('bread', 2)
