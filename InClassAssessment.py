@@ -55,6 +55,15 @@ class Shopping():
         self.__cart[item] = self.getCart(item) - q
         if self.__cart[item] == 0:
             del self.__cart[item]
+    # def discount(self,code):
+    #     # print("discountcheck for ", disCountRates.items())
+    #     for k, v in disCountRates.items():
+    #         # print(k, v)
+    #         if code == k:
+    #             # print("Discount rate present")
+    #             return v;
+
+
 chan = Shopping({'milk': 2})
 chan.addItem('bread', 4)
 chan.addItem('bread', 2)
