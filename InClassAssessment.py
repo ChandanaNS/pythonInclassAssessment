@@ -33,4 +33,19 @@ def fileDictionary(fileName):
 prices = fileDictionary("itemFile")
 
 
+class Shopping():
+    def __init__(self, cart={}):
+        self.__cart = cart
 
+    def getCart(self,item):
+        if item not in self.__cart:
+            return 0
+        return self.__cart[item]
+
+    def addItem(self, item, q):
+        if q <= 0:
+            raise ValueError("enter a valid quantity")
+        self.__cart[item] = q + self.getCart(item)
+chan = Shopping({'milk': 2})
+chan.addItem('bread', 4)
+chan.addItem('bread', 2)
