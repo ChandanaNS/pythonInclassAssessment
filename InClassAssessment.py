@@ -69,35 +69,45 @@ class Shopping():
     #     if self.__cart[item] == 0:
     #         del self.__cart[item]
 
-    def CartValue(self,code=''):
+    def CartValue(self, code=''):
             totalValue = 0
             priceList = {}
-            discList =[]
-            discCode = code
-            for key, val in disCountRates.items():
-                if discCode == key:
-                    discList = val
+            discList ={}
 
-            for k, v in self.__cart.items():
-                priceList[k] = (v * float(prices[k]))
-                if k in discList:
-                    if discCode == 'fresh30':
-                        print("Fresh30 Discount applied for ",k)
-                        priceList[k] -= priceList[k] * 0.3
-                    elif discCode == 'corona50':
-                        print("corona50 Discount applied for ",k)
-                        priceList[k] -= priceList[k] * 0.5
-                    else:
-                        priceList[k] = priceList[k]
-                    print('Amount after discount::::', priceList[k])
-                totalValue += v * float(priceList[k])
-            sortedList = sorted(priceList.items(), key=operator.itemgetter(1), reverse =True)
-            print('Total cart value is ::::', totalValue)
-            print('Discounted price list of your items ::::', priceList)
-            print('Lowest priced paid ::::', sortedList[-1])
-            print('Hishest priced Paid ::::', sortedList[0])
-            print("Your Cart list based on price ::::", sortedList)
-            return totalValue
+            if code != '':
+                for key, val in disCountRates.items():
+                    if code == key:
+                        discList = val
+                        break
+                if not discList:
+                    print("Invalid discount code")
+                    return
+
+            # discCode = code
+            # for key, val in disCountRates.items():
+            #     if discCode == key:
+            #         discList = val
+            #
+            # for k, v in self.__cart.items():
+            #     priceList[k] = (v * float(prices[k]))
+            #     if k in discList:
+            #         if discCode == 'fresh30':
+            #             print("Fresh30 Discount applied for ",k)
+            #             priceList[k] -= priceList[k] * 0.3
+            #         elif discCode == 'corona50':
+            #             print("corona50 Discount applied for ",k)
+            #             priceList[k] -= priceList[k] * 0.5
+            #         else:
+            #             priceList[k] = priceList[k]
+            #         print('Amount after discount::::', priceList[k])
+            #     totalValue += v * float(priceList[k])
+            # sortedList = sorted(priceList.items(), key=operator.itemgetter(1), reverse =True)
+            # print('Total cart value is ::::', totalValue)
+            # print('Discounted price list of your items ::::', priceList)
+            # print('Lowest priced paid ::::', sortedList[-1])
+            # print('Hishest priced Paid ::::', sortedList[0])
+            # print("Your Cart list based on price ::::", sortedList)
+            # return totalValue
 
 chan = Shopping({'milk': 5, 'bread': 1, 'onion': 2})
-# chan.CartValue('fresh30')
+chan.CartValue('fresh30')
