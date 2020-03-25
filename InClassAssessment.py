@@ -34,7 +34,7 @@ import operator
 #
 # disCountRates={'fresh30':['milk','bread'],'corona50':['rice']}
 
-prices = {'milk': '1.49', 'bread': '0.79', 'onion': '0.59', 'rice': '1.0', 'biscuits': '2.0', 'muffins': '1.7'}
+prices = {'milk': '1.49', 'bread': '0.79', 'onion': '0.59', 'rice': '1.0', 'biscuits': '2.0', 'muffins': '1.7', 'eggs': '3.2'}
 
 disCountRates = {
     'fresh30': {
@@ -43,6 +43,9 @@ disCountRates = {
     }, 'corona50': {
         'discount': 50,
         'items': ['rice']
+    }, 'festive15': {
+        'discount': 15,
+        'items': ['muffins', 'eggs']
     }
 }
 
@@ -82,6 +85,20 @@ class Shopping():
                 if not discList:
                     print("Invalid discount code")
                     return
+
+            for k, v in self.__cart.items():
+                priceList[k] = (v * float(prices[k]))
+                if discList and k in discList['items']:
+                    priceList[k] -= priceList[k] * (discList['discount'] / 100)
+                totalValue += priceList[k]
+            totalValue = round(totalValue, 2)
+            sortedList = sorted(priceList.items(), key=lambda item: item[1], reverse=True)
+
+            print('Total cart value is ::::', totalValue)
+            print('Lowest priced ::::', sortedList[-1])
+            print('Highest priced ::::', sortedList[0])
+            print("Your Cart list based on price in descending order :::: ", sortedList)
+            return sortedList
 
             # discCode = code
             # for key, val in disCountRates.items():
