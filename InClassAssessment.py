@@ -54,11 +54,14 @@ class Shopping():
 
             for k, v in self.__cart.items():
                 if k in prices:
-                    priceList[k] = (v * float(prices[k]))
-                    if discList and k in discList['items']:
-                        priceList[k] -= priceList[k] * (discList['discount'] / 100)
-                    totalValue += priceList[k]
-                    print("Added " + str(v) + ' ' + str(k) + ' to the cart.')
+                    if v > 0:
+                        priceList[k] = (v * float(prices[k]))
+                        if discList and k in discList['items']:
+                            priceList[k] -= priceList[k] * (discList['discount'] / 100)
+                        totalValue += priceList[k]
+                        print("Added " + str(v) + ' ' + str(k) + ' to the cart.')
+                    else:
+                        print("Item quantity is invalid for", k)
                 else:
                     print(k, "item not available!")
             totalValue = round(totalValue, 2)
@@ -73,5 +76,5 @@ class Shopping():
             print("Exception occurred: Invalid Input!")
 
 
-chan = Shopping({'milk': 5, 'bread': 1, "hih": 3, 'onion': 2, 'fjh': 5})
+chan = Shopping({'milk': 5, 'bread': 3, "hih": 3, 'onion': 2, 'eggs': 0})
 chan.CartValue('corona50')
