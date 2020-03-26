@@ -15,26 +15,9 @@ The shop has a standard price list, as well as a set of currently valid discount
 Produce a method which accepts a list of baskets, and outputs their values from highest to lowest.
 
 '''
-import operator
-# # Fetch price list from file
-# def fileDictionary(fileName):
-#     resultDict = {}
-#     try:
-#         fileOpen = open(fileName, 'r')
-#         for lines in fileOpen.readlines():
-#             line = lines.strip().split(" ")
-#             resultDict[line[0]] = line[1]
-#         print(resultDict)
-#         return resultDict
-#
-#     except IOError:
-#         print("Exception occurred: File Name not found!")
-#
-# prices = fileDictionary("itemFile") #please refer github repository for the file
-#
-# disCountRates={'fresh30':['milk','bread'],'corona50':['rice']}
 
-prices = {'milk': '1.49', 'bread': '0.79', 'onion': '0.59', 'rice': '1.0', 'biscuits': '2.0', 'muffins': '1.7', 'eggs': '3.2'}
+prices = {'milk': '1.49', 'bread': '0.79', 'onion': '0.59', 'rice': '1.0', 'biscuits': '2.0', 'muffins': '1.7',
+          'eggs': '3.2'}
 
 disCountRates = {
     'fresh30': {
@@ -49,33 +32,16 @@ disCountRates = {
     }
 }
 
+
 class Shopping():
     def __init__(self, cart={}):
         self.__cart = cart
 
-    # def getCart(self,item):
-    #     if item not in self.__cart:
-    #         return 0
-    #     return self.__cart[item]
-    #
-    # def addItem(self, item, q):
-    #     if q <= 0:
-    #         raise ValueError("enter a valid quantity")
-    #     self.__cart[item] = q + self.getCart(item)
-    #
-    # def delItem(self,item,q):
-    #     if q <= 0:
-    #         raise ValueError("Negative quantity not allowed")
-    #     elif q > self.getCart(item):
-    #         raise ValueError("insufficient quantity")
-    #     self.__cart[item] = self.getCart(item) - q
-    #     if self.__cart[item] == 0:
-    #         del self.__cart[item]
-
     def CartValue(self, code=''):
+        try:
             totalValue = 0
             priceList = {}
-            discList ={}
+            discList = {}
 
             if code != '':
                 for key, val in disCountRates.items():
@@ -87,44 +53,25 @@ class Shopping():
                     return
 
             for k, v in self.__cart.items():
-                priceList[k] = (v * float(prices[k]))
-                if discList and k in discList['items']:
-                    priceList[k] -= priceList[k] * (discList['discount'] / 100)
-                totalValue += priceList[k]
+                if k in prices:
+                    priceList[k] = (v * float(prices[k]))
+                    if discList and k in discList['items']:
+                        priceList[k] -= priceList[k] * (discList['discount'] / 100)
+                    totalValue += priceList[k]
+                    print("Added " + str(v) + ' ' + str(k) + ' to the cart.')
+                else:
+                    print(k, "item not available!")
             totalValue = round(totalValue, 2)
             sortedList = sorted(priceList.items(), key=lambda item: item[1], reverse=True)
 
-            print('Total cart value is ::::', totalValue)
-            print('Lowest priced ::::', sortedList[-1])
-            print('Highest priced ::::', sortedList[0])
+            print('\nTotal cart value is ::::', totalValue)
+            print('Lowest priced item::::', sortedList[-1])
+            print('Highest priced item::::', sortedList[0])
             print("Your Cart list based on price in descending order :::: ", sortedList)
             return sortedList
+        except:
+            print("Exception occurred: Invalid Input!")
 
-            # discCode = code
-            # for key, val in disCountRates.items():
-            #     if discCode == key:
-            #         discList = val
-            #
-            # for k, v in self.__cart.items():
-            #     priceList[k] = (v * float(prices[k]))
-            #     if k in discList:
-            #         if discCode == 'fresh30':
-            #             print("Fresh30 Discount applied for ",k)
-            #             priceList[k] -= priceList[k] * 0.3
-            #         elif discCode == 'corona50':
-            #             print("corona50 Discount applied for ",k)
-            #             priceList[k] -= priceList[k] * 0.5
-            #         else:
-            #             priceList[k] = priceList[k]
-            #         print('Amount after discount::::', priceList[k])
-            #     totalValue += v * float(priceList[k])
-            # sortedList = sorted(priceList.items(), key=operator.itemgetter(1), reverse =True)
-            # print('Total cart value is ::::', totalValue)
-            # print('Discounted price list of your items ::::', priceList)
-            # print('Lowest priced paid ::::', sortedList[-1])
-            # print('Hishest priced Paid ::::', sortedList[0])
-            # print("Your Cart list based on price ::::", sortedList)
-            # return totalValue
 
-chan = Shopping({'milk': 5, 'bread': 1, 'onion': 2})
-chan.CartValue('fresh30')
+chan = Shopping({'milk': 5, 'bread': 1, "hih": 3, 'onion': 2, 'fjh': 5})
+chan.CartValue('corona50')
