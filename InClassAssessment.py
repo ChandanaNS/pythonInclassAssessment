@@ -33,47 +33,47 @@ disCountRates = {
 }
 
 
-class Shopping():
+class Shopping:
     def __init__(self, cart={}):
         self.__cart = cart
 
     def CartValue(self, code=''):
         try:
-            totalValue = 0
-            priceList = {}
-            discList = {}
+            total_value = 0
+            price_list = {}
+            disc_list = {}
 
             if code != '':
                 for key, val in disCountRates.items():
                     if code == key:
-                        discList = val
+                        disc_list = val
                         break
-                if not discList:
+                if not disc_list:
                     print("Invalid discount code")
                     return
 
             for k, v in self.__cart.items():
                 if k in prices:
                     if v > 0:
-                        priceList[k] = (v * float(prices[k]))
-                        if discList and k in discList['items']:
-                            priceList[k] -= priceList[k] * (discList['discount'] / 100)
-                        totalValue += priceList[k]
+                        price_list[k] = (v * float(prices[k]))
+                        if disc_list and k in disc_list['items']:
+                            price_list[k] -= price_list[k] * (disc_list['discount'] / 100)
+                        total_value += price_list[k]
                         print("Added " + str(v) + ' ' + str(k) + ' to the cart.')
                     else:
                         print("Item quantity is invalid for", k)
                 else:
                     print(k, "item not available!")
-            totalValue = round(totalValue, 2)
-            sortedList = sorted(priceList.items(), key=lambda item: item[1], reverse=True)
+            total_value = round(total_value, 2)
+            sorted_list = sorted(price_list.items(), key=lambda item: item[1], reverse=True)
 
-            print('\nTotal cart value is ::::', totalValue)
-            print('Lowest priced item::::', sortedList[-1])
-            print('Highest priced item::::', sortedList[0])
-            print("Your Cart list based on price in descending order :::: ", sortedList)
-            return sortedList
+            print('\nTotal cart value is ::::', total_value)
+            print('Lowest priced item::::', sorted_list[-1])
+            print('Highest priced item::::', sorted_list[0])
+            print("Your Cart list based on price in descending order :::: ", sorted_list)
+            return sorted_list
         except:
-            print("Exception occurred: Invalid Input!")
+            print("Add items to the cart!")
 
 
 chan = Shopping({'milk': 5, 'bread': 3, "hih": 3, 'onion': 2, 'eggs': 0})
