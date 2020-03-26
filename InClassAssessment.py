@@ -58,6 +58,7 @@ class Shopping:
                         price_list[k] = (v * float(prices[k]))
                         if disc_list and k in disc_list['items']:
                             price_list[k] -= price_list[k] * (disc_list['discount'] / 100)
+                            price_list[k] = round(price_list[k], 2)
                         total_value += price_list[k]
                         print("Added " + str(v) + ' ' + str(k) + ' to the cart.')
                     else:
@@ -70,7 +71,7 @@ class Shopping:
             print('\nTotal cart value is ::::', total_value)
             print('Lowest priced item::::', sorted_list[-1])
             print('Highest priced item::::', sorted_list[0])
-            print("Your Cart list based on price in descending order :::: ", sorted_list)
+            print("Your Cart list based on price in descending order :::: ", sorted_list,'\n')
             return sorted_list
         except:
             print("Add items to the cart!")
